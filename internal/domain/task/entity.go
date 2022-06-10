@@ -5,6 +5,10 @@ import (
 	domain "github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
 )
 
+const (
+	TasksTableName = "users"
+)
+
 type TaskID int64
 
 type Task struct {
