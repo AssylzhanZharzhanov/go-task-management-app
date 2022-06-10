@@ -2,13 +2,16 @@ package app
 
 import (
 	"context"
+	"net/http"
+	"time"
+
 	taskRepo "github.com/AssylzhanZharzhanov/task-management-app/internal/task/repository"
 	tasksService "github.com/AssylzhanZharzhanov/task-management-app/internal/task/service"
+	tasksEndpoints "github.com/AssylzhanZharzhanov/task-management-app/internal/task/transport/http"
 	"github.com/AssylzhanZharzhanov/task-management-app/internal/user"
 	userRepo "github.com/AssylzhanZharzhanov/task-management-app/internal/user/repository"
 	usersService "github.com/AssylzhanZharzhanov/task-management-app/internal/user/service"
-	"net/http"
-	"time"
+	usersEndpoints "github.com/AssylzhanZharzhanov/task-management-app/internal/user/transport/http"
 
 	"github.com/AssylzhanZharzhanov/task-management-app/internal/task"
 	"github.com/gin-gonic/gin"
@@ -35,7 +38,7 @@ func NewApp(db *gorm.DB, port string) *App {
 		DB:   db,
 		Port: port,
 
-		//services
+		// Services
 		userService: usersService.NewService(usersRepository),
 		taskService: tasksService.NewService(tasksRepository),
 	}
@@ -49,7 +52,11 @@ func (s *App) Run() error {
 		gin.Logger(),
 	)
 
+	api := router.Group("/api")
+
 	//register endpoints
+	usersEndpoints.RegisterEndpoints(api, s.userService)
+	tasksEndpoints.RegisterEndpoints(api, s.taskService)
 
 	s.httpServer = &http.Server{
 		Addr:           ":" + s.Port,

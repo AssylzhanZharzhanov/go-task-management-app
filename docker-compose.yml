@@ -14,16 +14,17 @@ services:
     command: "nginx -g 'daemon off;'"
 
   app:
-    container_name: app
-    restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
-    command: ./app
-    depends_on:
-      - postgres
+    image: golang:1.17-alpine
+    working_dir: /app
+    command: go run cmd/api/main.go
+    env_file:
+      - configs/config.yml
     ports:
       - "8000:8000"
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
 
   postgres:
     container_name: postgres
