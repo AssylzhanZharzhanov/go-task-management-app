@@ -6,13 +6,3 @@ CREATE TABLE IF NOT EXISTS users (
     last_name VARCHAR,
     created_at BIGINT
 );
-
-CREATE TABLE IF NOT EXISTS tasks (
-    id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT REFERENCES users (id),
-    title VARCHAR,
-    description VARCHAR,
-    deadline int,
-    reminder_period int,
-    created_at BIGINT
-);
