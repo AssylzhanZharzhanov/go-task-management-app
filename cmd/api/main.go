@@ -14,7 +14,7 @@ import (
 
 func main() {
 	viper.AddConfigPath("configs")
-	viper.SetConfigName("config")
+	viper.SetConfigName("configs")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalf("Error in reading env file: %s", err.Error())
@@ -34,7 +34,7 @@ func main() {
 
 	port := viper.GetString("server.port")
 
-	srv := app.NewApp(port)
+	srv := app.NewApp(db, port)
 	go func() {
 		if err := srv.Run(); err != nil {
 			log.Fatalf("Error in starting server: %s", err.Error())
