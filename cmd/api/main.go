@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/AssylzhanZharzhanov/task-management-app/pkg/app"
+	"github.com/AssylzhanZharzhanov/task-management-app/internal/app"
 	"github.com/AssylzhanZharzhanov/task-management-app/pkg/db/postgres"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -34,7 +34,7 @@ func main() {
 
 	port := viper.GetString("server.port")
 
-	srv := app.NewServer(port)
+	srv := app.NewApp(port)
 	go func() {
 		if err := srv.Run(); err != nil {
 			log.Fatalf("Error in starting server: %s", err.Error())
@@ -50,7 +50,12 @@ func main() {
 		logrus.Errorf("error occured on server shutting down: %s", err.Error())
 	}
 
-	if err := db.Close(); err != nil {
+	sqlDB, err := db.DB()
+	if err != nil {
+		logrus.Errorf("can not setup sql database")
+	}
+
+	if err := sqlDB.Close(); err != nil {
 		logrus.Errorf("error occured on db connection close: %s", err.Error())
 	}
 }

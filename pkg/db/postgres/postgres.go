@@ -2,9 +2,9 @@ package postgres
 
 import (
 	"fmt"
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 type Config struct {
@@ -16,18 +16,25 @@ type Config struct {
 	SSLMode  string
 }
 
-func NewPostgresDB(cfg Config) (*sqlx.DB, error) {
-	db, err := sqlx.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
-		cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode))
+func NewPostgresDB(cfg Config) (*gorm.DB, error) {
+	gormDB, err := gorm.Open(postgres.Open(fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
+		cfg.Host, cfg.Port, cfg.Username, cfg.DBName, cfg.Password, cfg.SSLMode)),
+		&gorm.Config{})
 	if err != nil {
 		logrus.Println(err.Error())
 		return nil, err
 	}
 
-	err = db.Ping()
+	sqlDB, err := gormDB.DB()
+	if err != nil {
+		logrus.Fatal("Failed to setup sql database:", err)
+	}
+
+	err = sqlDB.Ping()
 	if err != nil {
 		logrus.Println(err.Error())
 		return nil, err
 	}
-	return db, nil
+
+	return gormDB, nil
 }

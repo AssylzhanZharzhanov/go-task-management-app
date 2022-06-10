@@ -1,14 +1,13 @@
-package task
+package user
 
 import (
-	"github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user/dto"
-	"github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user/entity"
+	"github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
 )
 
-type service interface {
-	Create(dto *dto.CreateUserDTO) (int, error)
-	Get() ([]*entity.User, error)
-	GetByID(userID entity.UserID) (*entity.User, error)
-	Update(userDTO dto.UpdateUserDTO) (*entity.User, error)
-	Delete(userID entity.UserID) error
+type Service interface {
+	Create(dto user.CreateUserDTO) (int, error)
+	List() ([]user.User, error)
+	GetByID(userID user.UserID) (user.User, error)
+	Update(userDTO user.UpdateUserDTO) (user.User, error)
+	Delete(userID user.UserID) error
 }
