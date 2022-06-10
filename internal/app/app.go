@@ -2,25 +2,42 @@ package app
 
 import (
 	"context"
-	"github.com/AssylzhanZharzhanov/task-management-app/internal/task"
-	"github.com/gin-gonic/gin"
+	taskRepo "github.com/AssylzhanZharzhanov/task-management-app/internal/task/repository"
+	tasksService "github.com/AssylzhanZharzhanov/task-management-app/internal/task/service"
+	"github.com/AssylzhanZharzhanov/task-management-app/internal/user"
+	userRepo "github.com/AssylzhanZharzhanov/task-management-app/internal/user/repository"
+	usersService "github.com/AssylzhanZharzhanov/task-management-app/internal/user/service"
 	"net/http"
 	"time"
+
+	"github.com/AssylzhanZharzhanov/task-management-app/internal/task"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type App struct {
 	httpServer *http.Server
 
-	taskService task.Service
-	userService task.Service
+	DB          *gorm.DB
 	Port        string
+
+	userService user.Service
+	taskService task.Service
 }
 
-func NewApp(port string) *App {
-	//add use cases
+func NewApp(db *gorm.DB, port string) *App {
+
+	// Repositories
+	usersRepository := userRepo.NewPostgresRepository(db)
+	tasksRepository := taskRepo.NewPostgresRepository(db)
 
 	return &App{
+		DB:   db,
 		Port: port,
+
+		//services
+		userService: usersService.NewService(usersRepository),
+		taskService: tasksService.NewService(tasksRepository),
 	}
 }
 

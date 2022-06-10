@@ -17,4 +17,3 @@ func RegisterEndpoints(router *gin.RouterGroup, service task.Service) {
 		users.DELETE("", h.Delete)
 	}
 }
-

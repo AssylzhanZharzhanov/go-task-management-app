@@ -1,4 +1,4 @@
-package user
+package domain
 
 type CreateUserDTO struct {
 	FirstName string `json:"first_name"`
@@ -16,9 +16,13 @@ type UpdateUserDTO struct {
 }
 
 func NewCreatedUser(dto CreateUserDTO) User {
+	return User{
 
+	}
 }
 
 func NewUpdatedUser(dto CreateUserDTO) User {
+	return User{
 
+	}
 }

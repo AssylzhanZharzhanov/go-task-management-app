@@ -1,15 +1,15 @@
-package task
+package domain
 
 import (
 	"errors"
-	"github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
+	domain "github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
 )
 
 type TaskID int64
 
 type Task struct {
 	ID             TaskID      `json:"id"`
-	UserID         user.UserID `json:"user_id"`
+	UserID         domain.UserID `json:"user_id"`
 	Title          string      `json:"title"`
 	Description    string      `json:"description"`
 	StartDate      int64       `json:"start_date"`
@@ -18,7 +18,7 @@ type Task struct {
 	CreatedAt      int64       `json:"created_at"`
 }
 
-func NewNote(dto CreateTaskDTO) Task {
+func NewCreatedTask(dto CreateTaskDTO) Task {
 	return Task{
 		UserID:         dto.UserID,
 		Title:          dto.Title,

@@ -1,11 +1,11 @@
-package task
+package domain
 
 import (
 	"github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
 )
 
 type CreateTaskDTO struct {
-	UserID         user.UserID `json:"user_id"`
+	UserID         domain.UserID `json:"user_id"`
 	Title          string      `json:"title"`
 	Description    string      `json:"description"`
 	StartDate      int64       `json:"start_date"`
@@ -15,7 +15,7 @@ type CreateTaskDTO struct {
 
 type UpdateTaskDTO struct {
 	ID             TaskID      `json:"id"`
-	UserID         user.UserID `json:"user_id"`
+	UserID         domain.UserID `json:"user_id"`
 	Title          string      `json:"title"`
 	Description    string      `json:"description"`
 	StartDate      int64       `json:"start_date"`
