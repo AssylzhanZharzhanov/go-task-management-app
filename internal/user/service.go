@@ -5,9 +5,9 @@ import (
 )
 
 type Service interface {
-	Create(dto user.CreateUserDTO) (int, error)
-	List() ([]user.User, error)
-	GetByID(userID user.UserID) (user.User, error)
-	Update(userDTO user.UpdateUserDTO) (user.User, error)
-	Delete(userID user.UserID) error
+	Create(dto domain.CreateUserDTO) (int, error)
+	List() ([]domain.User, error)
+	GetByID(userID domain.UserID) (domain.User, error)
+	Update(userDTO domain.UpdateUserDTO) (domain.User, error)
+	Delete(userID domain.UserID) error
 }

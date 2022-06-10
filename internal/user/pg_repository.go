@@ -5,9 +5,9 @@ import (
 )
 
 type PostgresRepository interface {
-	Create(user user.User) (int, error)
-	List() ([]user.User, error)
-	GetByID(userID user.UserID) (user.User, error)
-	Update(user user.User) (user.User, error)
-	Delete(userID user.UserID) error
+	Create(user domain.User) (int, error)
+	List() ([]domain.User, error)
+	GetByID(userID domain.UserID) (domain.User, error)
+	Update(user domain.User) (domain.User, error)
+	Delete(userID domain.UserID) error
 }
