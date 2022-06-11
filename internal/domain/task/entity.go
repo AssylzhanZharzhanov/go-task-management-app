@@ -18,6 +18,7 @@ type Task struct {
 	StartDate      int64         `json:"start_date" gorm:"not null;column:start_date"`
 	EndDate        int64         `json:"end_date" gorm:"not null;column:end_date"`
 	ReminderPeriod int64         `json:"reminder_period" gorm:"not null;column:reminder_period"`
+	IsCompleted    bool          `json:"is_completed" gorm:"not null;column:is_completed"`
 	CreatedAt      int64         `json:"created_at" gorm:"not null;column:created_at"`
 }
 
@@ -40,6 +41,7 @@ func NewUpdatedTask(dto *UpdateTaskDTO) *Task {
 		Description:    dto.Description,
 		StartDate:      dto.StartDate,
 		EndDate:        dto.EndDate,
+		IsCompleted:    dto.IsCompleted,
 		ReminderPeriod: dto.ReminderPeriod,
 	}
 }

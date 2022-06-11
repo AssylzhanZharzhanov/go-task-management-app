@@ -28,12 +28,16 @@ type UpdateTaskDTO struct {
 	Description    string        `json:"description"`
 	StartDate      int64         `json:"start_date"`
 	EndDate        int64         `json:"end_date"`
+	IsCompleted    bool          `json:"is_completed"`
 	ReminderPeriod int64         `json:"reminder_period"`
 }
 
 func (t UpdateTaskDTO) Validate() error {
 	if len(t.Title) == 0 {
 		return errors.New("title is invalid")
+	}
+	if t.UserID <0 {
+		return errors.New("invalid user id")
 	}
 	return nil
 }

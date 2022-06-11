@@ -30,13 +30,14 @@ func TestPostgresRepository_Create(t *testing.T) {
 		StartDate:      1654827132,
 		EndDate:        1654935132,
 		ReminderPeriod: 86400,
+		IsCompleted:    false,
 		CreatedAt:      1654941048,
 	}
 
 	columns := []string{"id"}
 	rows := sqlmock.NewRows(columns).AddRow(&mockTask.ID)
 
-	createTaskQuery := `INSERT INTO "tasks" ("user_id","title","description","start_date","end_date","reminder_period","created_at") VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "id"`
+	createTaskQuery := `INSERT INTO "tasks" ("user_id","title","description","start_date","end_date","reminder_period","is_completed","created_at") VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id"`
 
 	mock.ExpectBegin()
 	mock.ExpectQuery(createTaskQuery).WithArgs(
@@ -46,6 +47,7 @@ func TestPostgresRepository_Create(t *testing.T) {
 		mockTask.StartDate,
 		mockTask.EndDate,
 		mockTask.ReminderPeriod,
+		mockTask.IsCompleted,
 		mockTask.CreatedAt,
 	).WillReturnRows(rows)
 	mock.ExpectCommit()
@@ -80,10 +82,11 @@ func TestPostgresRepository_Update(t *testing.T) {
 		StartDate:      1654827132,
 		EndDate:        1654935132,
 		ReminderPeriod: 86400,
+		IsCompleted:    true,
 		CreatedAt:      1654941048,
 	}
 
-	columns := []string{"id", "user_id", "title", "description", "start_date", "end_date", "reminder_period", "created_at"}
+	columns := []string{"id", "user_id", "title", "description", "start_date", "end_date", "reminder_period", "is_completed", "created_at"}
 	rows := sqlmock.NewRows(columns).AddRow(
 		&mockTask.ID,
 		&mockTask.UserID,
@@ -92,10 +95,11 @@ func TestPostgresRepository_Update(t *testing.T) {
 		&mockTask.StartDate,
 		&mockTask.EndDate,
 		&mockTask.ReminderPeriod,
+		&mockTask.IsCompleted,
 		&mockTask.CreatedAt,
 	)
 
-	updateTaskQuery := `UPDATE "tasks" SET "id"=$1,"user_id"=$2,"title"=$3,"description"=$4,"start_date"=$5,"end_date"=$6,"reminder_period"=$7,"created_at"=$8 WHERE id = $9 RETURNING *`
+	updateTaskQuery := `UPDATE "tasks" SET "id"=$1,"user_id"=$2,"title"=$3,"description"=$4,"start_date"=$5,"end_date"=$6,"reminder_period"=$7,"is_completed"=$8,"created_at"=$9 WHERE id = $10 RETURNING *`
 
 	mock.ExpectBegin()
 	mock.ExpectQuery(updateTaskQuery).WithArgs(
@@ -106,6 +110,7 @@ func TestPostgresRepository_Update(t *testing.T) {
 		mockTask.StartDate,
 		mockTask.EndDate,
 		mockTask.ReminderPeriod,
+		mockTask.IsCompleted,
 		mockTask.CreatedAt,
 		taskID,
 	).WillReturnRows(rows)
@@ -139,6 +144,7 @@ func TestPostgresRepository_GetByID(t *testing.T) {
 		StartDate:      1654827132,
 		EndDate:        1654935132,
 		ReminderPeriod: 86400,
+		IsCompleted:    true,
 		CreatedAt:      1654941048,
 	}
 
@@ -151,6 +157,7 @@ func TestPostgresRepository_GetByID(t *testing.T) {
 		&mockTask.StartDate,
 		&mockTask.EndDate,
 		&mockTask.ReminderPeriod,
+		&mockTask.IsCompleted,
 		&mockTask.CreatedAt,
 	)
 
