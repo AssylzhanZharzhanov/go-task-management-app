@@ -22,8 +22,8 @@ import (
 type App struct {
 	httpServer *http.Server
 
-	DB          *gorm.DB
-	Port        string
+	DB   *gorm.DB
+	Port string
 
 	userService user.Service
 	taskService task.Service

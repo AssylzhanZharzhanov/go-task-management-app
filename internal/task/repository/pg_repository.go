@@ -9,7 +9,7 @@ type PostgresRepository struct {
 	db *gorm.DB
 }
 
-func (p PostgresRepository) Create(task domain.Task) (domain.Task, error) {
+func (p PostgresRepository) Create(task *domain.Task) (domain.Task, error) {
 	return domain.Task{}, nil
 }
 
@@ -21,11 +21,11 @@ func (p PostgresRepository) GetByID(taskID domain.TaskID) (domain.Task, error) {
 	return domain.Task{}, nil
 }
 
-func (p PostgresRepository) Update(task domain.Task) (domain.Task, error) {
+func (p PostgresRepository) Update(task *domain.Task) (domain.Task, error) {
 	return domain.Task{}, nil
 }
 
-func (p PostgresRepository) Delete(task domain.Task, err error) error {
+func (p PostgresRepository) Delete(taskID domain.TaskID) error {
 	return nil
 }
 

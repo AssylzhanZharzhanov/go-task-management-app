@@ -1,35 +1,36 @@
-package user
+package task
 
 import (
-	"testing"
-
-	domain "github.com/AssylzhanZharzhanov/task-management-app/internal/domain/user"
-
-	"github.com/AssylzhanZharzhanov/task-management-app/internal/user/mock"
+	domain "github.com/AssylzhanZharzhanov/task-management-app/internal/domain/task"
+	"github.com/AssylzhanZharzhanov/task-management-app/internal/task/mock"
 	"github.com/go-test/deep"
 	"github.com/golang/mock/gomock"
+	"testing"
 )
 
 func TestService_Create(t *testing.T) {
 	var (
-		validUserDTO = &domain.CreateUserDTO{
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "strange",
+		validTaskDTO = &domain.CreateTaskDTO{
+			UserID:      1,
+			Title:       "Create microservice",
+			Description: "Create microservice using go-kit",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
-		validUser = &domain.User{
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "strange",
+		validTask = &domain.Task{
+			UserID:      1,
+			Title:       "Create microservice",
+			Description: "Create microservice using go-kit",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
-		validUserResult = domain.User{
-			ID:        1,
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "strange",
+		validTaskResult = domain.Task{
+			ID:          1,
+			UserID:      1,
+			Title:       "Create microservice",
+			Description: "Create microservice using go-kit",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
 	)
 
@@ -40,8 +41,8 @@ func TestService_Create(t *testing.T) {
 	repoStub := mock.NewMockPostgresRepository(stubCtrl)
 
 	repoStub.EXPECT().
-		Create(validUser).
-		Return(int(validUserResult.ID), nil).
+		Create(validTask).
+		Return(validTaskResult, nil).
 		AnyTimes()
 
 	// Setup basic service.
@@ -49,10 +50,10 @@ func TestService_Create(t *testing.T) {
 
 	// Define tests.
 	type arguments struct {
-		user *domain.CreateUserDTO
+		task *domain.CreateTaskDTO
 	}
 	type result struct {
-		userID int
+		task domain.Task
 	}
 	tests := []struct {
 		name        string
@@ -61,41 +62,26 @@ func TestService_Create(t *testing.T) {
 		expectError bool
 	}{
 		{
-			name: "Success: create valid user",
+			name: "Success: create valid task",
 			arguments: arguments{
-				user: validUserDTO,
+				task: validTaskDTO,
 			},
 			expected: result{
-				userID: int(validUserResult.ID),
+				task: validTaskResult,
 			},
 			expectError: false,
 		},
 		{
-			name: "Fail: user is nil",
+			name: "Fail: task is nil",
 			arguments: arguments{
-				user: nil,
+				task: nil,
 			},
 			expectError: true,
 		},
 		{
-			name: "Fail: invalid first_name",
+			name: "Fail: task title nil",
 			arguments: arguments{
-				user: &domain.CreateUserDTO{
-					LastName: "Strange",
-					Email:    "doctor.strange@gmail.com",
-					Password: "strange",
-				},
-			},
-			expectError: true,
-		},
-		{
-			name: "Fail: invalid email",
-			arguments: arguments{
-				user: &domain.CreateUserDTO{
-					FirstName: "Stephen",
-					LastName:  "Strange",
-					Password:  "strange",
-				},
+				task: nil,
 			},
 			expectError: true,
 		},
@@ -106,13 +92,13 @@ func TestService_Create(t *testing.T) {
 			arguments := test.arguments
 			expected := test.expected
 
-			createdUserID, err := service.Create(arguments.user)
+			createdTask, err := service.Create(arguments.task)
 			if !test.expectError {
 				if err != nil {
 					t.Errorf("unexpected error: %s", err)
 				}
 				actual := result{
-					userID: createdUserID,
+					task: createdTask,
 				}
 				if diff := deep.Equal(expected, actual); diff != nil {
 					t.Error(diff)
@@ -128,26 +114,29 @@ func TestService_Create(t *testing.T) {
 
 func TestService_Update(t *testing.T) {
 	var (
-		validUserDTO = &domain.UpdateUserDTO{
-			ID:        1,
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "masterofmystic",
+		validTaskDTO = &domain.UpdateTaskDTO{
+			ID:          1,
+			UserID:      1,
+			Title:       "Update microservice",
+			Description: "Update microservice using go-micro",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
-		validUser = &domain.User{
-			ID:        1,
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "masterofmystic",
+		validUpdatedTask = &domain.Task{
+			ID:          1,
+			UserID:      1,
+			Title:       "Update microservice",
+			Description: "Update microservice using go-micro",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
-		validUserResult = domain.User{
-			ID:        1,
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "masterofmystic",
+		validTaskResult = domain.Task{
+			ID:          1,
+			UserID:      1,
+			Title:       "Update microservice",
+			Description: "Update microservice using go-micro",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
 	)
 
@@ -158,8 +147,8 @@ func TestService_Update(t *testing.T) {
 	repoStub := mock.NewMockPostgresRepository(stubCtrl)
 
 	repoStub.EXPECT().
-		Update(validUser).
-		Return(validUserResult, nil).
+		Update(validUpdatedTask).
+		Return(validTaskResult, nil).
 		AnyTimes()
 
 	// Setup basic service.
@@ -167,10 +156,10 @@ func TestService_Update(t *testing.T) {
 
 	// Define tests.
 	type arguments struct {
-		user *domain.UpdateUserDTO
+		task *domain.UpdateTaskDTO
 	}
 	type result struct {
-		userID domain.User
+		task domain.Task
 	}
 	tests := []struct {
 		name        string
@@ -179,31 +168,26 @@ func TestService_Update(t *testing.T) {
 		expectError bool
 	}{
 		{
-			name: "Success: update valid user",
+			name: "Success: create valid task",
 			arguments: arguments{
-				user: validUserDTO,
+				task: validTaskDTO,
 			},
 			expected: result{
-				userID: validUserResult,
+				task: validTaskResult,
 			},
 			expectError: false,
 		},
 		{
-			name: "Fail: user is nil",
+			name: "Fail: task is nil",
 			arguments: arguments{
-				user: nil,
+				task: nil,
 			},
 			expectError: true,
 		},
 		{
-			name: "Fail: invalid id",
+			name: "Fail: task title nil",
 			arguments: arguments{
-				user: &domain.UpdateUserDTO{
-					FirstName: "Stephen",
-					LastName:  "Strange",
-					Email:     "doctor.strange@gmail.com",
-					Password:  "masterofmystic",
-				},
+				task: nil,
 			},
 			expectError: true,
 		},
@@ -214,13 +198,13 @@ func TestService_Update(t *testing.T) {
 			arguments := test.arguments
 			expected := test.expected
 
-			updatedUser, err := service.Update(arguments.user)
+			createdTask, err := service.Update(arguments.task)
 			if !test.expectError {
 				if err != nil {
 					t.Errorf("unexpected error: %s", err)
 				}
 				actual := result{
-					userID: updatedUser,
+					task: createdTask,
 				}
 				if diff := deep.Equal(expected, actual); diff != nil {
 					t.Error(diff)
@@ -236,13 +220,14 @@ func TestService_Update(t *testing.T) {
 
 func TestService_GetByID(t *testing.T) {
 	var (
-		validUserID = domain.UserID(1)
-		validUser   = domain.User{
-			ID:        1,
-			FirstName: "Stephen",
-			LastName:  "Strange",
-			Email:     "doctor.strange@gmail.com",
-			Password:  "masterofmystic",
+		validTaskID = domain.TaskID(1)
+		validTask   = domain.Task{
+			ID:          1,
+			UserID:      1,
+			Title:       "Create microservice",
+			Description: "Create microservice using go-kit",
+			StartDate:   1654827132,
+			EndDate:     1654935132,
 		}
 	)
 
@@ -253,8 +238,8 @@ func TestService_GetByID(t *testing.T) {
 	repoStub := mock.NewMockPostgresRepository(stubCtrl)
 
 	repoStub.EXPECT().
-		GetByID(validUserID).
-		Return(validUser, nil).
+		GetByID(validTaskID).
+		Return(validTask, nil).
 		AnyTimes()
 
 	// Setup basic service.
@@ -262,10 +247,10 @@ func TestService_GetByID(t *testing.T) {
 
 	// Define tests.
 	type arguments struct {
-		userID domain.UserID
+		taskID domain.TaskID
 	}
 	type result struct {
-		user domain.User
+		task domain.Task
 	}
 	tests := []struct {
 		name        string
@@ -274,19 +259,19 @@ func TestService_GetByID(t *testing.T) {
 		expectError bool
 	}{
 		{
-			name: "Success: get user by id",
+			name: "Success: get task by id",
 			arguments: arguments{
-				userID: validUserID,
+				taskID: validTaskID,
 			},
 			expected: result{
-				user: validUser,
+				task: validTask,
 			},
 			expectError: false,
 		},
 		{
-			name: "Fail:invalid user id",
+			name: "Fail: task id is invalid",
 			arguments: arguments{
-				userID: 0,
+				taskID: 0,
 			},
 			expectError: true,
 		},
@@ -297,13 +282,13 @@ func TestService_GetByID(t *testing.T) {
 			arguments := test.arguments
 			expected := test.expected
 
-			user, err := service.GetByID(arguments.userID)
+			user, err := service.GetByID(arguments.taskID)
 			if !test.expectError {
 				if err != nil {
 					t.Errorf("unexpected error: %s", err)
 				}
 				actual := result{
-					user: user,
+					task: user,
 				}
 				if diff := deep.Equal(expected, actual); diff != nil {
 					t.Error(diff)
@@ -315,11 +300,12 @@ func TestService_GetByID(t *testing.T) {
 			}
 		})
 	}
+
 }
 
 func TestService_Delete(t *testing.T) {
 	var (
-		userID = domain.UserID(1)
+		taskID = domain.TaskID(1)
 	)
 
 	stubCtrl := gomock.NewController(t)
@@ -329,7 +315,7 @@ func TestService_Delete(t *testing.T) {
 	repoStub := mock.NewMockPostgresRepository(stubCtrl)
 
 	repoStub.EXPECT().
-		Delete(userID).
+		Delete(taskID).
 		Return(nil).
 		AnyTimes()
 
@@ -338,7 +324,7 @@ func TestService_Delete(t *testing.T) {
 
 	// Define tests.
 	type arguments struct {
-		userID domain.UserID
+		taskID domain.TaskID
 	}
 	type result struct {
 		res error
@@ -350,9 +336,9 @@ func TestService_Delete(t *testing.T) {
 		expectError bool
 	}{
 		{
-			name: "Success: delete user",
+			name: "Success: delete task",
 			arguments: arguments{
-				userID: userID,
+				taskID: taskID,
 			},
 			expected: result{
 				res: nil,
@@ -360,9 +346,9 @@ func TestService_Delete(t *testing.T) {
 			expectError: false,
 		},
 		{
-			name: "Fail: delete user",
+			name: "Fail: task id is invalid",
 			arguments: arguments{
-				userID: 0,
+				taskID: 0,
 			},
 			expectError: true,
 		},
@@ -373,7 +359,7 @@ func TestService_Delete(t *testing.T) {
 			arguments := test.arguments
 			expected := test.expected
 
-			err := service.Delete(arguments.userID)
+			err := service.Delete(arguments.taskID)
 			if !test.expectError {
 				if err != nil {
 					t.Errorf("unexpected error: %s", err)
@@ -391,4 +377,5 @@ func TestService_Delete(t *testing.T) {
 			}
 		})
 	}
+
 }

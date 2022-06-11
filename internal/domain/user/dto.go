@@ -57,18 +57,18 @@ func (u UpdateUserDTO) Validate() error {
 func NewCreatedUser(dto *CreateUserDTO) *User {
 	return &User{
 		FirstName: dto.FirstName,
-		LastName: dto.LastName,
-		Email: dto.Email,
-		Password: dto.Password,
+		LastName:  dto.LastName,
+		Email:     dto.Email,
+		Password:  dto.Password,
 	}
 }
 
 func NewUpdatedUser(dto *UpdateUserDTO) *User {
 	return &User{
-		ID: dto.ID,
+		ID:        dto.ID,
 		FirstName: dto.FirstName,
-		LastName: dto.LastName,
-		Email: dto.Email,
-		Password: dto.Password,
+		LastName:  dto.LastName,
+		Email:     dto.Email,
+		Password:  dto.Password,
 	}
 }
