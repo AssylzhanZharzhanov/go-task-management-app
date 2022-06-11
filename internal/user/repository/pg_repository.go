@@ -9,7 +9,7 @@ type PostgresRepository struct {
 	db *gorm.DB
 }
 
-func (p PostgresRepository) Create(user domain.User) (int, error) {
+func (p PostgresRepository) Create(user *domain.User) (int, error) {
 	return 0, nil
 }
 
@@ -21,7 +21,7 @@ func (p PostgresRepository) GetByID(userID domain.UserID) (domain.User, error) {
 	return domain.User{}, nil
 }
 
-func (p PostgresRepository) Update(user domain.User) (domain.User, error) {
+func (p PostgresRepository) Update(user *domain.User) (domain.User, error) {
 	return domain.User{}, nil
 }
 

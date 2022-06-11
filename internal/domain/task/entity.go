@@ -12,14 +12,14 @@ const (
 type TaskID int64
 
 type Task struct {
-	ID             TaskID      `json:"id"`
-	UserID         domain.UserID `json:"user_id"`
-	Title          string      `json:"title"`
-	Description    string      `json:"description"`
-	StartDate      int64       `json:"start_date"`
-	EndDate        int64       `json:"end_date"`
-	ReminderPeriod int64       `json:"reminder_period"`
-	CreatedAt      int64       `json:"created_at"`
+	ID             TaskID      `json:"id" gorm:"primaryKey;autoIncrement;column:id"`
+	UserID         domain.UserID `json:"user_id" gorm:"not null;column:user_id"`
+	Title          string      `json:"title" gorm:"not null;column:title"`
+	Description    string      `json:"description" gorm:"not null;column:description"`
+	StartDate      int64       `json:"start_date" gorm:"not null;column:start_date"`
+	EndDate        int64       `json:"end_date" gorm:"not null;column:end_date"`
+	ReminderPeriod int64       `json:"reminder_period" gorm:"not null;column:reminder_period"`
+	CreatedAt      int64       `json:"created_at" gorm:"not null;column:created_at"`
 }
 
 func NewCreatedTask(dto CreateTaskDTO) Task {

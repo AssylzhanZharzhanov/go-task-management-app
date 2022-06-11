@@ -18,6 +18,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// App - represents application structure
 type App struct {
 	httpServer *http.Server
 
@@ -28,6 +29,7 @@ type App struct {
 	taskService task.Service
 }
 
+// NewApp - returns app
 func NewApp(db *gorm.DB, port string) *App {
 
 	// Repositories
@@ -44,6 +46,7 @@ func NewApp(db *gorm.DB, port string) *App {
 	}
 }
 
+// Run - runs app
 func (s *App) Run() error {
 
 	router := gin.Default()
@@ -69,6 +72,7 @@ func (s *App) Run() error {
 	return s.httpServer.ListenAndServe()
 }
 
+// Shutdown - shut down app
 func (s *App) Shutdown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }
