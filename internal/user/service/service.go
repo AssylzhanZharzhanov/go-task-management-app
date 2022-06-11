@@ -26,19 +26,19 @@ func (s *Service) List() ([]domain.User, error) {
 	return s.repository.List()
 }
 
-func (s *Service) GetByID(userID domain.UserID) (domain.User, error) {
+func (s *Service) GetByID(userID domain.UserID) (*domain.User, error) {
 	if userID <= 0 {
-		return domain.User{}, errors.New("invalid user id")
+		return &domain.User{}, errors.New("invalid user id")
 	}
 	return s.repository.GetByID(userID)
 }
 
-func (s *Service) Update(userDTO *domain.UpdateUserDTO) (domain.User, error) {
+func (s *Service) Update(userDTO *domain.UpdateUserDTO) (*domain.User, error) {
 	if userDTO == nil {
-		return domain.User{}, errors.New("user is nil")
+		return &domain.User{}, errors.New("user is nil")
 	}
 	if err := userDTO.Validate(); err != nil {
-		return domain.User{}, err
+		return &domain.User{}, err
 	}
 
 	newUser := domain.NewUpdatedUser(userDTO)

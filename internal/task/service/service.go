@@ -10,12 +10,12 @@ type Service struct {
 	repository task.PostgresRepository
 }
 
-func (s *Service) Create(dto *domain.CreateTaskDTO) (domain.Task, error) {
+func (s *Service) Create(dto *domain.CreateTaskDTO) (*domain.Task, error) {
 	if dto == nil {
-		return domain.Task{}, errors.New("input is invalid")
+		return &domain.Task{}, errors.New("input is invalid")
 	}
 	if err := dto.Validate(); err != nil {
-		return domain.Task{}, err
+		return &domain.Task{}, err
 	}
 
 	newTask := domain.NewCreatedTask(dto)
@@ -26,19 +26,19 @@ func (s *Service) List() ([]domain.Task, error) {
 	return s.repository.List()
 }
 
-func (s *Service) GetByID(taskID domain.TaskID) (domain.Task, error) {
+func (s *Service) GetByID(taskID domain.TaskID) (*domain.Task, error) {
 	if taskID <= 0 {
-		return domain.Task{}, errors.New("invalid task id")
+		return &domain.Task{}, errors.New("invalid task id")
 	}
 	return s.repository.GetByID(taskID)
 }
 
-func (s *Service) Update(dto *domain.UpdateTaskDTO) (domain.Task, error) {
+func (s *Service) Update(dto *domain.UpdateTaskDTO) (*domain.Task, error) {
 	if dto == nil {
-		return domain.Task{}, errors.New("input is invalid")
+		return &domain.Task{}, errors.New("input is invalid")
 	}
 	if err := dto.Validate(); err != nil {
-		return domain.Task{}, err
+		return &domain.Task{}, err
 	}
 	newTask := domain.NewUpdatedTask(dto)
 

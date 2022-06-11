@@ -8,7 +8,7 @@ import (
 type PostgresRepository interface {
 	Create(user *domain.User) (int, error)
 	List() ([]domain.User, error)
-	GetByID(userID domain.UserID) (domain.User, error)
-	Update(user *domain.User) (domain.User, error)
+	GetByID(userID domain.UserID) (*domain.User, error)
+	Update(user *domain.User) (*domain.User, error)
 	Delete(userID domain.UserID) error
 }

@@ -142,7 +142,7 @@ func TestService_Update(t *testing.T) {
 			Email:     "doctor.strange@gmail.com",
 			Password:  "masterofmystic",
 		}
-		validUserResult = domain.User{
+		validUserResult = &domain.User{
 			ID:        1,
 			FirstName: "Stephen",
 			LastName:  "Strange",
@@ -170,7 +170,7 @@ func TestService_Update(t *testing.T) {
 		user *domain.UpdateUserDTO
 	}
 	type result struct {
-		userID domain.User
+		userID *domain.User
 	}
 	tests := []struct {
 		name        string
@@ -237,7 +237,7 @@ func TestService_Update(t *testing.T) {
 func TestService_GetByID(t *testing.T) {
 	var (
 		validUserID = domain.UserID(1)
-		validUser   = domain.User{
+		validUser   = &domain.User{
 			ID:        1,
 			FirstName: "Stephen",
 			LastName:  "Strange",
@@ -265,7 +265,7 @@ func TestService_GetByID(t *testing.T) {
 		userID domain.UserID
 	}
 	type result struct {
-		user domain.User
+		user *domain.User
 	}
 	tests := []struct {
 		name        string

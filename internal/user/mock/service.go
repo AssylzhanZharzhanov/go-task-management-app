@@ -64,10 +64,10 @@ func (mr *MockServiceMockRecorder) Delete(userID interface{}) *gomock.Call {
 }
 
 // GetByID mocks base method.
-func (m *MockService) GetByID(userID domain.UserID) (domain.User, error) {
+func (m *MockService) GetByID(userID domain.UserID) (*domain.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", userID)
-	ret0, _ := ret[0].(domain.User)
+	ret0, _ := ret[0].(*domain.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -94,10 +94,10 @@ func (mr *MockServiceMockRecorder) List() *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockService) Update(userDTO *domain.UpdateUserDTO) (domain.User, error) {
+func (m *MockService) Update(userDTO *domain.UpdateUserDTO) (*domain.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", userDTO)
-	ret0, _ := ret[0].(domain.User)
+	ret0, _ := ret[0].(*domain.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

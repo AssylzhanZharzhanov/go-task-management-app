@@ -24,7 +24,7 @@ func TestService_Create(t *testing.T) {
 			StartDate:   1654827132,
 			EndDate:     1654935132,
 		}
-		validTaskResult = domain.Task{
+		validTaskResult = &domain.Task{
 			ID:          1,
 			UserID:      1,
 			Title:       "Create microservice",
@@ -53,7 +53,7 @@ func TestService_Create(t *testing.T) {
 		task *domain.CreateTaskDTO
 	}
 	type result struct {
-		task domain.Task
+		task *domain.Task
 	}
 	tests := []struct {
 		name        string
@@ -130,7 +130,7 @@ func TestService_Update(t *testing.T) {
 			StartDate:   1654827132,
 			EndDate:     1654935132,
 		}
-		validTaskResult = domain.Task{
+		validTaskResult = &domain.Task{
 			ID:          1,
 			UserID:      1,
 			Title:       "Update microservice",
@@ -159,7 +159,7 @@ func TestService_Update(t *testing.T) {
 		task *domain.UpdateTaskDTO
 	}
 	type result struct {
-		task domain.Task
+		task *domain.Task
 	}
 	tests := []struct {
 		name        string
@@ -221,7 +221,7 @@ func TestService_Update(t *testing.T) {
 func TestService_GetByID(t *testing.T) {
 	var (
 		validTaskID = domain.TaskID(1)
-		validTask   = domain.Task{
+		validTask   = &domain.Task{
 			ID:          1,
 			UserID:      1,
 			Title:       "Create microservice",
@@ -250,7 +250,7 @@ func TestService_GetByID(t *testing.T) {
 		taskID domain.TaskID
 	}
 	type result struct {
-		task domain.Task
+		task *domain.Task
 	}
 	tests := []struct {
 		name        string

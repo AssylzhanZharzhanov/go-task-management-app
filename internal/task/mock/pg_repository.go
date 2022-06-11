@@ -35,10 +35,10 @@ func (m *MockPostgresRepository) EXPECT() *MockPostgresRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockPostgresRepository) Create(task *domain.Task) (domain.Task, error) {
+func (m *MockPostgresRepository) Create(task *domain.Task) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", task)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -64,10 +64,10 @@ func (mr *MockPostgresRepositoryMockRecorder) Delete(taskID interface{}) *gomock
 }
 
 // GetByID mocks base method.
-func (m *MockPostgresRepository) GetByID(taskID domain.TaskID) (domain.Task, error) {
+func (m *MockPostgresRepository) GetByID(taskID domain.TaskID) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", taskID)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -94,10 +94,10 @@ func (mr *MockPostgresRepositoryMockRecorder) List() *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockPostgresRepository) Update(task *domain.Task) (domain.Task, error) {
+func (m *MockPostgresRepository) Update(task *domain.Task) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", task)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

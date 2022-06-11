@@ -35,10 +35,10 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockService) Create(dto *domain.CreateTaskDTO) (domain.Task, error) {
+func (m *MockService) Create(dto *domain.CreateTaskDTO) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", dto)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -64,10 +64,10 @@ func (mr *MockServiceMockRecorder) Delete(taskID interface{}) *gomock.Call {
 }
 
 // GetByID mocks base method.
-func (m *MockService) GetByID(taskID domain.TaskID) (domain.Task, error) {
+func (m *MockService) GetByID(taskID domain.TaskID) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", taskID)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -94,10 +94,10 @@ func (mr *MockServiceMockRecorder) List() *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockService) Update(dto *domain.UpdateTaskDTO) (domain.Task, error) {
+func (m *MockService) Update(dto *domain.UpdateTaskDTO) (*domain.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", dto)
-	ret0, _ := ret[0].(domain.Task)
+	ret0, _ := ret[0].(*domain.Task)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

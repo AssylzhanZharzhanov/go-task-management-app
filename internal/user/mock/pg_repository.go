@@ -64,10 +64,10 @@ func (mr *MockPostgresRepositoryMockRecorder) Delete(userID interface{}) *gomock
 }
 
 // GetByID mocks base method.
-func (m *MockPostgresRepository) GetByID(userID domain.UserID) (domain.User, error) {
+func (m *MockPostgresRepository) GetByID(userID domain.UserID) (*domain.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", userID)
-	ret0, _ := ret[0].(domain.User)
+	ret0, _ := ret[0].(*domain.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -94,10 +94,10 @@ func (mr *MockPostgresRepositoryMockRecorder) List() *gomock.Call {
 }
 
 // Update mocks base method.
-func (m *MockPostgresRepository) Update(user *domain.User) (domain.User, error) {
+func (m *MockPostgresRepository) Update(user *domain.User) (*domain.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", user)
-	ret0, _ := ret[0].(domain.User)
+	ret0, _ := ret[0].(*domain.User)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
