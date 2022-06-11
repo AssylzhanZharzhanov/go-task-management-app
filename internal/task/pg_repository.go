@@ -9,4 +9,5 @@ type PostgresRepository interface {
 	GetByID(taskID domain.TaskID) (*domain.Task, error)
 	Update(task *domain.Task) (*domain.Task, error)
 	Delete(taskID domain.TaskID) error
+	IsTaskExist(userID int64, startDate int64) (bool, error)
 }

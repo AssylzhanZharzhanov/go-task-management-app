@@ -19,6 +19,15 @@ func (s *Service) Create(dto *domain.CreateTaskDTO) (*domain.Task, error) {
 	}
 
 	newTask := domain.NewCreatedTask(dto)
+
+	isExist, err := s.repository.IsTaskExist(int64(newTask.UserID), newTask.StartDate)
+	if err != nil {
+		return &domain.Task{}, err
+	}
+	if isExist {
+		return &domain.Task{}, errors.New("user has task during this time")
+	}
+
 	return s.repository.Create(newTask)
 }
 

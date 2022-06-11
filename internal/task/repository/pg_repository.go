@@ -53,6 +53,19 @@ func (r *PostgresRepository) Delete(taskID domain.TaskID) error {
 	return nil
 }
 
+func (r *PostgresRepository) IsTaskExist(userID int64, startDate int64) (bool, error) {
+	var isExist bool
+	err := r.db.Model(&domain.Task{}).
+		Select("count(*) > 0").
+		Where("user_id = ? AND start_date <= ? AND end_date >= ?", userID, startDate, startDate).
+		Find(&isExist).Error
+	if err != nil {
+		return false, err
+	}
+	return isExist, nil
+}
+
+
 func NewPostgresRepository(db *gorm.DB) *PostgresRepository {
 	return &PostgresRepository{db: db}
 }
