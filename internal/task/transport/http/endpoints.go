@@ -14,6 +14,6 @@ func RegisterEndpoints(router *gin.RouterGroup, service task.Service) {
 		users.GET("", h.List)
 		users.GET(":id", h.GetByID)
 		users.PUT(":id", h.Update)
-		users.DELETE("", h.Delete)
+		users.DELETE(":id", h.Delete)
 	}
 }
