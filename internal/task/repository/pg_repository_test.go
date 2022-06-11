@@ -148,7 +148,7 @@ func TestPostgresRepository_GetByID(t *testing.T) {
 		CreatedAt:      1654941048,
 	}
 
-	columns := []string{"id", "user_id", "title", "description", "start_date", "end_date", "reminder_period", "created_at"}
+	columns := []string{"id", "user_id", "title", "description", "start_date", "end_date", "reminder_period", "is_completed","created_at"}
 	rows := sqlmock.NewRows(columns).AddRow(
 		&mockTask.ID,
 		&mockTask.UserID,
