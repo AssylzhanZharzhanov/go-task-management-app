@@ -41,6 +41,11 @@ func TestService_Create(t *testing.T) {
 	repoStub := mock.NewMockPostgresRepository(stubCtrl)
 
 	repoStub.EXPECT().
+		IsTaskExist(int64(validTask.UserID), validTask.StartDate).
+		Return(false, nil).
+		AnyTimes()
+
+	repoStub.EXPECT().
 		Create(validTask).
 		Return(validTaskResult, nil).
 		AnyTimes()

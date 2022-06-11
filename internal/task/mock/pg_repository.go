@@ -78,6 +78,21 @@ func (mr *MockPostgresRepositoryMockRecorder) GetByID(taskID interface{}) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockPostgresRepository)(nil).GetByID), taskID)
 }
 
+// IsTaskExist mocks base method.
+func (m *MockPostgresRepository) IsTaskExist(userID, startDate int64) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsTaskExist", userID, startDate)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IsTaskExist indicates an expected call of IsTaskExist.
+func (mr *MockPostgresRepositoryMockRecorder) IsTaskExist(userID, startDate interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsTaskExist", reflect.TypeOf((*MockPostgresRepository)(nil).IsTaskExist), userID, startDate)
+}
+
 // List mocks base method.
 func (m *MockPostgresRepository) List() ([]domain.Task, error) {
 	m.ctrl.T.Helper()
